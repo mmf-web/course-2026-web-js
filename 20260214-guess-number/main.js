@@ -9,22 +9,15 @@ buttonEl.addEventListener('click', onGuessClick)
 
 function onGuessClick() {
   let inputValue = Number(inputEl.value)
-  resultEl.innerHTML = inputValue === answer ? 'Win' : 'Not really'
 
-  // console.log("User's guess: ", inputValue)
+  if (inputValue === answer) {
+    resultEl.innerHTML = 'Win'
+    return
+  }
 
-  // ! We compare string and number !
-  // Please do not use ==, use ===
-  // if (inputValue == answer) {
-  //   resultEl.innerHTML = 'Win'
-  // } else {
-  //   resultEl.innerHTML = 'Not really'
-  // }
-
-  // If else – if you are not lazy
-  // if (inputValue === answer) {
-  //   resultEl.innerHTML = 'Win'
-  // } else {
-  //   resultEl.innerHTML = 'Not really'
-  // }
+  if (inputValue > answer) {
+    resultEl.innerHTML += '<p>Less than ' + inputValue + '</p>'
+  } else {
+    resultEl.innerHTML += '<p>Greater than ' + inputValue + '</p>'
+  }
 }
