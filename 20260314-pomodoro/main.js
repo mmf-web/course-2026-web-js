@@ -1,6 +1,15 @@
 const timerEl = document.querySelector('#timer')
 const startBtnEl = document.querySelector('#start-btn')
 
+const CONFIG = {
+  WORK_ROUNDS: 4,
+  WORK_DURATION_MS: 5 * 1000,
+  REST_DURATION_MS: 1 * 1000,
+}
+
+// ! WARN: HACK to avoid Uncaught (in promise) ReferenceError: can't access lexical declaration 'work' before initialization !
+setTimeout(() => pomodoro(CONFIG.WORK_ROUNDS, CONFIG.WORK_DURATION_MS, CONFIG.REST_DURATION_MS))
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 const renderTime = () => {
@@ -32,10 +41,3 @@ async function pomodoro(n, workMs, restMs) {
     await rest(3 * restMs)
   }
 }
-
-const CONFIG = {
-  WORK_ROUNDS: 4,
-  WORK_DURATION_MS: 5 * 1000,
-  REST_DURATION_MS: 1 * 1000,
-}
-pomodoro(CONFIG.WORK_ROUNDS, CONFIG.WORK_DURATION_MS, CONFIG.REST_DURATION_MS)
