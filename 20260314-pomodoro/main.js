@@ -1,45 +1,41 @@
-const timerInputEl = document.querySelector('#timer-input')
+const timerEl = document.querySelector('#timer')
+const startBtnEl = document.querySelector('#start-btn')
 
-function sleep(ms) {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      resolve()
-    }, ms)
-  })
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+const renderTime = () => {
+  const time = new Date()
+  const hours = time.getHours()
+  const minutes = time.getMinutes()
+  const seconds = time.getSeconds()
+  timerEl.innerText = `${hours}:${minutes}:${seconds}`
 }
 
-function sayHelloStart() {
-  const ms = Number(timerInputEl.value)
-
-  sleep(ms)
-    .then(() => {
-      console.log('hello 1', new Date().toISOString())
-    })
-    .then(function () {
-      return sleep(ms)
-    })
-    .then(function () {
-      console.log('hello 2', new Date().toISOString())
-    })
-}
-
-function sayHelloBetter() {
-  const ms = Number(timerInputEl.value)
-
-  sleep(ms)
-    .then(() => console.log('hello 1', new Date().toISOString()))
-    .then(() => sleep(ms))
-    .then(() => console.log('hello 2', new Date().toISOString()))
-}
-
-async function sayHelloAsync() {
-  const ms = Number(timerInputEl.value)
-
+async function start(color, ms) {
+  timerEl.style.backgroundColor = color
+  let intervalId = setInterval(renderTime, 1000)
   await sleep(ms)
-  console.log('hello 1', new Date().toISOString())
-
-  await sleep(ms)
-  console.log('hello 2', new Date().toISOString())
+  clearInterval(intervalId)
 }
 
-timerInputEl.addEventListener('change', sayHelloAsync)
+const work = (ms) => start('aqua', ms)
+const rest = (ms) => start('#c8e6c9', ms)
+
+async function pomodoro(n, workMs, restMs) {
+  while (true) {
+    for (let i = 0; i < n - 1; i++) {
+      await work(workMs)
+      await rest(restMs)
+    }
+
+    await work(workMs)
+    await rest(3 * restMs)
+  }
+}
+
+const CONFIG = {
+  WORK_ROUNDS: 4,
+  WORK_DURATION_MS: 5 * 1000,
+  REST_DURATION_MS: 1 * 1000,
+}
+pomodoro(CONFIG.WORK_ROUNDS, CONFIG.WORK_DURATION_MS, CONFIG.REST_DURATION_MS)
