@@ -9,7 +9,7 @@ class App {
     this.renderer.onNextQuote(this.printQuote)
   }
 
-  async printQuote() {
+  printQuote = async () => {
     const quote = await this.api.getQuote()
     this.renderer.renderQuote(quote)
   }
