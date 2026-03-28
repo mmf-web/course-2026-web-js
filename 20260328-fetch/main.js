@@ -4,12 +4,5 @@ const api = new ChuckNorrisApi()
 const renderer = new HTMLRenderer()
 // const renderer = new ConsoleRenderer()
 
-// Business layer
-getQuote()
-renderer.onNextQuote(getQuote)
-
-function getQuote() {
-  api.getQuote().then((quote) => {
-    renderer.renderQuote(quote)
-  })
-}
+const app = new App(api, renderer)
+app.run()
