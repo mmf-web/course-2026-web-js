@@ -1,4 +1,4 @@
-class RGB {
+class RGB extends ColorSchema {
   #r
   #g
   #b
@@ -14,6 +14,12 @@ class RGB {
   }
 
   constructor(r = 0, g = 0, b = 0) {
+    super('RGB')
+    this.fields = [
+      { name: 'r', onInput: (value) => this.setR(value), getValue: () => this.#r },
+      { name: 'g', onInput: (value) => this.setG(value), getValue: () => this.#g },
+      { name: 'b', onInput: (value) => this.setB(value), getValue: () => this.#b },
+    ]
     this.setRGB(r, g, b)
   }
 
@@ -45,5 +51,12 @@ class RGB {
 
   get b() {
     return this.#b
+  }
+
+  toRGB = () => ({ r: this.#r, g: this.#g, b: this.#b })
+  fromRGB = ({ r, g, b }) => {
+    this.#r = r
+    this.#g = g
+    this.#b = b
   }
 }

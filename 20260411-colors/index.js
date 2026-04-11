@@ -13,7 +13,11 @@ const eventBus = {
   },
 }
 
-rgb.setR(123)
-eventBus.emit()
+// rgb.setR(123)
+// eventBus.emit()
 
-console.log(rgb, cmy)
+// console.log(rgb, cmy)
+
+const renderer = new Renderer(document.querySelector('#colors-container'))
+renderer.addSchema(rgb)
+renderer.addSchema(cmy)
