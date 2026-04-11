@@ -1,0 +1,73 @@
+<script>
+  // let a = {
+  //   string: 'asdfas',
+  //   12: 1233,
+  // }
+  // console.log(a)
+
+  // function B(c) {
+  //   this.c = c
+  // }
+  // let b = new B(1234)
+  // console.log(b)
+
+  // TODO: 3ий способ создать объект
+
+  class A {
+    static type = 'horizontal'
+
+    constructor(a) {
+      this.a = a
+    }
+
+    print() {
+      console.log('a: ', this.a)
+    }
+  }
+
+  class AB extends A {
+    static type = 'vertical'
+
+    constructor(a, b) {
+      super(a)
+      this.b = b
+    }
+
+    print() {
+      super.print()
+      console.log('b', this.b)
+    }
+  }
+
+  const a = new A(5)
+  const ab = new AB(1, 2)
+  ab.print()
+
+  class NotFoundError extends Error {
+    static code = 404
+
+    constructor(name) {
+      super(name)
+    }
+  }
+
+  class InternalServerError extends Error {
+    constructor(name) {
+      super(name)
+    }
+  }
+
+  function doComplexCalc() {
+    throw new InternalServerError()
+  }
+
+  try {
+    doComplexCalc()
+  } catch (err) {
+    if (err instanceof InternalServerError) {
+      res.sendStatus(500)
+    } else if (err instanceof NotFoundError) {
+      res.sendStatus(404)
+    }
+  }
+</script>
